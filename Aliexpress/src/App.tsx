@@ -1,5 +1,11 @@
+import Mobile from "./components/mobile/app";
+
 function App() {
-  return <h2>this is ali express</h2>;
+  return (
+    <>
+      <Mobile />
+    </>
+  );
 }
 
 export default App;

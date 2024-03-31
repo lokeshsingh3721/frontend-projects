@@ -9,51 +9,51 @@ import {
 import { AiOutlineHome, AiOutlineRight } from "react-icons/ai";
 import { MdCurrencyExchange, MdOutlineLanguage } from "react-icons/md";
 import { PiHeadset } from "react-icons/pi";
-import SidebarCard from "./common/sidebar-card";
+import SidebarCard from "./common/SidebarCard";
 
 interface Product {
   url: string;
   title: string;
 }
 
-const Navbar = () => {
+const dummyProducts = [
+  {
+    url: "https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+    title: "Product",
+  },
+  {
+    url: "https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+    title: "Product",
+  },
+  {
+    url: "https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+    title: "Product",
+  },
+  {
+    url: "https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+    title: "Product",
+  },
+  {
+    url: "https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+    title: "Product",
+  },
+  {
+    url: "https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+    title: "Product",
+  },
+  {
+    url: "https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+    title: "Product",
+  },
+];
+
+const MobileNavbar = () => {
   const [search, setSearch] = useState<string>("");
   const [menuopen, isMenuOpen] = useState<boolean>(false);
 
   function menuHandler() {
     isMenuOpen(!menuopen);
   }
-
-  const dummyProducts: Product[] = [
-    {
-      url: "https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-      title: "Product",
-    },
-    {
-      url: "https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-      title: "Product",
-    },
-    {
-      url: "https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-      title: "Product",
-    },
-    {
-      url: "https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-      title: "Product",
-    },
-    {
-      url: "https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-      title: "Product",
-    },
-    {
-      url: "https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-      title: "Product",
-    },
-    {
-      url: "https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-      title: "Product",
-    },
-  ];
 
   return (
     <div className="flex flex-col gap-2 ">
@@ -174,8 +174,12 @@ const Navbar = () => {
           </div>
         </div>
       </div>
+      <div className="flex gap-4">
+        <CiLocationOn className="w-4 h-auto cursor-pointer" />
+        <p className="font-semibold text-sm"> Deliver to India </p>
+      </div>
     </div>
   );
 };
 
-export default Navbar;
+export default MobileNavbar;
