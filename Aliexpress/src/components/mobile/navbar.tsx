@@ -65,7 +65,7 @@ const MobileNavbar = () => {
               menuHandler();
             }}
           />
-          <p className="text-xl l text-red-500  tracking-lighter">AliExpress</p>
+          <p className="text-xl l text-red-500  tracking-lighter">Ecommerce</p>
         </div>
         <div
           className={`flex justify-center items-center gap-3 ${
@@ -102,7 +102,7 @@ const MobileNavbar = () => {
             onClick={() => menuHandler()}
             className="w-6 h-auto cursor-pointer"
           />
-          <p className="text-xl  text-red-500  tracking-lighter">AliExpress</p>
+          <p className="text-xl  text-red-500  tracking-lighter">Ecommerce</p>
         </div>
         {/* // product category */}
         <div className="flex  flex-col gap-3">
