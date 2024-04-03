@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   CiMenuBurger,
   CiUser,
@@ -10,6 +10,7 @@ import { AiOutlineHome, AiOutlineRight } from "react-icons/ai";
 import { MdCurrencyExchange, MdOutlineLanguage } from "react-icons/md";
 import { PiHeadset } from "react-icons/pi";
 import SidebarCard from "./common/SidebarCard";
+import { useNavigate } from "react-router-dom";
 
 interface Product {
   url: string;
@@ -48,8 +49,20 @@ const dummyProducts = [
 ];
 
 const MobileNavbar = () => {
+  const path = window.location.pathname === "/mobile";
+
   const [search, setSearch] = useState<string>("");
   const [menuopen, isMenuOpen] = useState<boolean>(false);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (menuopen) {
+      document.body.style.overflow = "hidden"; // Prevent scrolling on body
+    } else {
+      document.body.style.overflow = "auto"; // Allow scrolling on body
+    }
+  }, [menuopen]);
 
   function menuHandler() {
     isMenuOpen(!menuopen);
@@ -65,23 +78,27 @@ const MobileNavbar = () => {
               menuHandler();
             }}
           />
-          <p className="text-xl l text-red-500  tracking-lighter">Ecommerce</p>
+          <p
+            className="text-xl l text-red-500  tracking-lighter"
+            onClick={() => {
+              navigate("/mobile");
+            }}
+          >
+            Ecommerce
+          </p>
         </div>
-        <div
-          className={`flex justify-center items-center gap-3 ${
-            menuopen ? "pointer-events-none" : "pointer-events-auto"
-          } `}
-        >
+        <div className={`flex justify-center items-center gap-3`}>
+          <CiSearch
+            className={`w-6 h-auto  cursor-pointer ${
+              path ? "hidden" : "inline-block"
+            }`}
+          />
           <CiUser className="w-6 h-auto  cursor-pointer " />
           <CiShoppingCart className="w-7 h-auto cursor-pointer" />
         </div>
       </div>
       {/* search bar */}
-      <div
-        className={`flex relative h-9 ${
-          menuopen ? "pointer-events-none" : "pointer-events-auto"
-        }`}
-      >
+      <div className={`flex relative h-9 ${path ? "inline-block" : "hidden"}`}>
         <input
           type="text"
           value={search}
@@ -91,92 +108,98 @@ const MobileNavbar = () => {
         />
         <CiSearch className="absolute right-2 top-2 w-5 h-auto cursor-pointer" />
       </div>
-      {/* // side bar */}
-      <div
-        className={`fixed w-3/4 h-full bg-white z-10 flex flex-col gap-3 overflow-y-auto scroll-m-0 no-scrollbar ${
-          menuopen ? `block` : "hidden"
-        }`}
-      >
-        <div className="flex  gap-1 ">
-          <AiOutlineHome
-            onClick={() => menuHandler()}
-            className="w-6 h-auto cursor-pointer"
-          />
-          <p className="text-xl  text-red-500  tracking-lighter">Ecommerce</p>
-        </div>
-        {/* // product category */}
-        <div className="flex  flex-col gap-3">
-          <div className="flex justify-between">
-            <p className="font-bold text-lg">Popular Category</p>
-            <AiOutlineRight className="w-7 h-auto cursor-pointer" />
-          </div>
-          {dummyProducts.map((product: Product) => {
-            return (
-              <SidebarCard
-                key={product.title}
-                url={product.url}
-                title={product.title}
-              />
-            );
-          })}
-        </div>
-        {/* shopping inspirations  */}
-        <div className="flex  flex-col gap-3">
-          <div className="flex justify-between">
-            <p className="font-bold text-lg">Shopping Inspirations</p>
-            <AiOutlineRight className="w-7 h-auto cursor-pointer" />
-          </div>
-          {dummyProducts.map((product: Product) => {
-            return (
-              <SidebarCard
-                key={product.title}
-                url={product.url}
-                title={product.title}
-              />
-            );
-          })}
-        </div>
 
-        {/* // footer */}
-        <div className="mb-10 flex flex-col gap-5">
-          <div className="flex justify-between">
-            <p className="font-bold text-lg">Setting</p>
-            <AiOutlineRight className="w-7 h-auto cursor-pointer" />
-          </div>
-          <div className="flex justify-between">
-            <div className="flex gap-4">
-              <CiLocationOn className="w-6 h-auto cursor-pointer" />
-              <p>Ship to </p>
-            </div>
-            <img
-              src="https://upload.wikimedia.org/wikipedia/en/thumb/4/41/Flag_of_India.svg/1200px-Flag_of_India.svg.png"
-              alt="country"
-              className="w-6 h-auto "
-            />
-          </div>
-          <div className="flex justify-between">
-            <div className="flex gap-4">
-              <MdCurrencyExchange className="w-6 h-auto cursor-pointer" />
-              <p>Currency </p>
-            </div>
-          </div>
-          <div className="flex justify-between">
-            <div className="flex gap-4">
-              <MdOutlineLanguage className="w-6 h-auto cursor-pointer" />
-              <p>Language </p>
-            </div>
-          </div>
-          <div className="flex justify-between">
-            <div className="flex gap-4">
-              <PiHeadset className="w-6 h-auto cursor-pointer" />
-              <p>Help center </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="flex gap-4">
+      <div className={`flex gap-4 ${path ? "inline-block" : "hidden"}`}>
         <CiLocationOn className="w-4 h-auto cursor-pointer" />
         <p className="font-semibold text-sm"> Deliver to India </p>
+      </div>
+
+      {/* // side bar */}
+      <div
+        className={`fixed w-full h-full  z-10 ${
+          menuopen ? `block` : "hidden"
+        } `}
+      >
+        <div
+          className={` fixed w-3/4 h-full bg-white   flex flex-col gap-3 overflow-y-auto scroll-m-0 no-scrollbar `}
+        >
+          <div className="flex  gap-1 ">
+            <AiOutlineHome
+              onClick={() => menuHandler()}
+              className="w-6 h-auto cursor-pointer"
+            />
+            <p className="text-xl  text-red-500  tracking-lighter">Ecommerce</p>
+          </div>
+          {/* // product category */}
+          <div className="flex  flex-col gap-3">
+            <div className="flex justify-between">
+              <p className="font-bold text-lg">Popular Category</p>
+              <AiOutlineRight className="w-7 h-auto cursor-pointer" />
+            </div>
+            {dummyProducts.map((product: Product) => {
+              return (
+                <SidebarCard
+                  key={product.title}
+                  url={product.url}
+                  title={product.title}
+                />
+              );
+            })}
+          </div>
+          {/* shopping inspirations  */}
+          <div className="flex  flex-col gap-3">
+            <div className="flex justify-between">
+              <p className="font-bold text-lg">Shopping Inspirations</p>
+              <AiOutlineRight className="w-7 h-auto cursor-pointer" />
+            </div>
+            {dummyProducts.map((product: Product) => {
+              return (
+                <SidebarCard
+                  key={product.title}
+                  url={product.url}
+                  title={product.title}
+                />
+              );
+            })}
+          </div>
+
+          {/* // footer */}
+          <div className="mb-10 flex flex-col gap-5">
+            <div className="flex justify-between">
+              <p className="font-bold text-lg">Setting</p>
+              <AiOutlineRight className="w-7 h-auto cursor-pointer" />
+            </div>
+            <div className="flex justify-between">
+              <div className="flex gap-4">
+                <CiLocationOn className="w-6 h-auto cursor-pointer" />
+                <p>Ship to </p>
+              </div>
+              <img
+                src="https://upload.wikimedia.org/wikipedia/en/thumb/4/41/Flag_of_India.svg/1200px-Flag_of_India.svg.png"
+                alt="country"
+                className="w-6 h-auto "
+              />
+            </div>
+            <div className="flex justify-between">
+              <div className="flex gap-4">
+                <MdCurrencyExchange className="w-6 h-auto cursor-pointer" />
+                <p>Currency </p>
+              </div>
+            </div>
+            <div className="flex justify-between">
+              <div className="flex gap-4">
+                <MdOutlineLanguage className="w-6 h-auto cursor-pointer" />
+                <p>Language </p>
+              </div>
+            </div>
+            <div className="flex justify-between">
+              <div className="flex gap-4">
+                <PiHeadset className="w-6 h-auto cursor-pointer" />
+                <p>Help center </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
